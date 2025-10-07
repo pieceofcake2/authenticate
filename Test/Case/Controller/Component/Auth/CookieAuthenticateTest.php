@@ -30,63 +30,125 @@ App::uses('Router', 'Routing');
  * Test case for FormAuthentication
  *
  * @package       Cake.Test.Case.Controller.Component.Auth
+ * @property CakeResponse $response
  */
-class CookieAuthenticateTest extends CakeTestCase {
+class CookieAuthenticateTest extends CakeTestCase
+{
+    public $fixtures = ['plugin.authenticate.multi_user'];
 
-	public $fixtures = array('plugin.authenticate.multi_user');
+    /**
+     * setup
+     *
+     * @return void
+     */
+    public function setUp(): void
+    {
+        parent::setUp();
+        $this->request = new CakeRequest('posts/index', false);
+        Router::setRequestInfo($this->request);
+        $this->Collection = new ComponentCollection();
+        $this->Collection->load('Cookie');
+        $this->Collection->load('Session');
+        $this->auth = new CookieAuthenticate($this->Collection, [
+            'fields' => ['username' => 'user', 'password' => 'password'],
+            'userModel' => 'MultiUser',
+        ]);
+        $password = Security::hash('password', null, true);
+        $User = ClassRegistry::init('MultiUser');
+        $User->updateAll(['password' => $User->getDataSource()->value($password)]);
+        $this->response = $this->getMock('CakeResponse');
+    }
 
-/**
- * setup
- *
- * @return void
- */
-	public function setUp() {
-		parent::setUp();
-		$this->request = new CakeRequest('posts/index', false);
-		Router::setRequestInfo($this->request);
-		$this->Collection = new ComponentCollection();
-		$this->Collection->load('Cookie');
-		$this->Collection->load('Session');
-		$this->auth = new CookieAuthenticate($this->Collection, array(
-			'fields' => array('username' => 'user', 'password' => 'password'),
-			'userModel' => 'MultiUser',
-		));
-		$password = Security::hash('password', null, true);
-		$User = ClassRegistry::init('MultiUser');
-		$User->updateAll(array('password' => $User->getDataSource()->value($password)));
-		$this->response = $this->getMock('CakeResponse');
-	}
+    /**
+     * tearDown
+     *
+     * @return void
+     */
+    public function tearDown(): void
+    {
+        parent::tearDown();
+        $this->Collection->Cookie->destroy();
+    }
 
-/**
- * tearDown
- *
- * @return void
- */
-	public function tearDown() {
-		parent::tearDown();
-		$this->Collection->Cookie->destroy();
-	}
+    /**
+     * test authenticate email or username
+     *
+     * @return void
+     */
+    public function testAuthenticate(): void
+    {
+        if (!extension_loaded('mcrypt')) {
+            $this->markTestSkipped('The Mcrypt extension is not available.');
+        }
 
-/**
- * test authenticate email or username
- *
- * @return void
- */
-	public function testAuthenticate() {
-		$expected = array(
-			'id' => 1,
-			'user' => 'mariano',
-			'email' => 'mariano@example.com',
-			'token' => '12345',
-			'created' => '2007-03-17 01:16:23',
-			'updated' => '2007-03-17 01:18:31'
-		);
+        $expected = [
+            'id' => 1,
+            'user' => 'mariano',
+            'email' => 'mariano@example.com',
+            'token' => '12345',
+            'created' => '2007-03-17 01:16:23',
+            'updated' => '2007-03-17 01:18:31',
+        ];
 
-		$result = $this->auth->authenticate($this->request, $this->response);
-		$this->assertFalse($result);
+        $result = $this->auth->authenticate($this->request, $this->response);
+        $this->assertFalse($result);
 
-		$this->Collection->Cookie->write('MultiUser', array('user' => 'mariano', 'password' => 'password'));
-		$result = $this->auth->authenticate($this->request, $this->response);
-		$this->assertEquals($expected, $result);
-	}
+        $this->Collection->Cookie->write('MultiUser', ['user' => 'mariano', 'password' => 'password']);
+        $result = $this->auth->authenticate($this->request, $this->response);
+        $this->assertEquals($expected, $result);
+    }
+
+    /**
+     * test authenticate with AES encryption (mcrypt)
+     *
+     * @return void
+     */
+    public function testAuthenticateWithAesMcrypt(): void
+    {
+        if (!extension_loaded('mcrypt')) {
+            $this->markTestSkipped('The Mcrypt extension is not available.');
+        }
+
+        $expected = [
+            'id' => 1,
+            'user' => 'mariano',
+            'email' => 'mariano@example.com',
+            'token' => '12345',
+            'created' => '2007-03-17 01:16:23',
+            'updated' => '2007-03-17 01:18:31',
+        ];
+
+        $this->Collection->Cookie->type('aes');
+        $this->Collection->Cookie->write('MultiUser', ['user' => 'mariano', 'password' => 'password']);
+        $result = $this->auth->authenticate($this->request, $this->response);
+        $this->assertEquals($expected, $result);
+    }
+
+    /**
+     * test authenticate with AES encryption (OpenSSL)
+     *
+     * @return void
+     */
+    public function testAuthenticateWithAesOpenSsl(): void
+    {
+        if (!extension_loaded('openssl')) {
+            $this->markTestSkipped('The OpenSSL extension is not available.');
+        }
+
+        Configure::write('Security.useOpenSsl', true);
+
+        $expected = [
+            'id' => 1,
+            'user' => 'mariano',
+            'email' => 'mariano@example.com',
+            'token' => '12345',
+            'created' => '2007-03-17 01:16:23',
+            'updated' => '2007-03-17 01:18:31',
+        ];
+
+        $this->Collection->Cookie->type('aes');
+        $this->Collection->Cookie->write('MultiUser', ['user' => 'mariano', 'password' => 'password']);
+        $result = $this->auth->authenticate($this->request, $this->response);
+        $this->assertEquals($expected, $result);
+    }
 }

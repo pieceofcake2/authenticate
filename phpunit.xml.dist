@@ -21,7 +21,6 @@
             <directory suffix=".php">.</directory>
         </include>
         <exclude>
-            <directory>./Console/Templates</directory>
             <directory>./Test</directory>
             <directory>./vendor</directory>
         </exclude>

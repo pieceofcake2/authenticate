@@ -16,6 +16,10 @@
         "pieceofcake2/app": "^2.1",
         "pieceofcake2/phpstan-cakephp2": "^0.2.1"
     },
+    "replace": {
+        "ceeram/authenticate": "^1.0",
+        "friendsofcake/authenticate": "^1.0"
+    },
     "config": {
         "sort-packages": true,
         "allow-plugins": {
