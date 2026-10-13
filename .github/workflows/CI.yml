@@ -92,11 +92,6 @@ jobs:
           sudo locale-gen de_DE;
           sudo locale-gen es_ES;
 
-      - name: Install wkhtmltopdf
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y wkhtmltopdf
-
       - name: Composer get cache directory
         id: composer-cache
         run: echo "dir=$(composer config cache-files-dir)" >> $GITHUB_OUTPUT
@@ -118,7 +113,7 @@ jobs:
           chmod -R 777 ./vendor/pieceofcake2/app/logs
 
       - name: Copy database.php
-        run: cp ./vendor/pieceofcake2/cakephp/lib/Cake/Test/Config/database.php ./vendor/pieceofcake2/app/config/
+        run: cp ./vendor/pieceofcake2/cakephp/tests/config/database.php ./vendor/pieceofcake2/app/config/
 
       - name: Setup problem matchers for PHPUnit
         run: echo "::add-matcher::${{ runner.tool_cache }}/phpunit.json"
