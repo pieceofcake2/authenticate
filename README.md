@@ -22,7 +22,7 @@ GoogleAuthenticate is moved to separate repo: https://github.com/ceeram/GoogleAu
 ## Requirements
 
 * PHP 8.0+
-* CakePHP 2.10+
+* CakePHP 2.12+
 
 ## Installation
 
