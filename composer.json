@@ -1,7 +1,7 @@
 {
     "name": "pieceofcake2/authenticate",
     "type": "cakephp-plugin",
-    "description": "CakePHP plugin with authentication classes for AuthComponent.",
+    "description": "Authentication objects for the CakePHP 2 AuthComponent: multi-column form, cookie and token authentication",
     "keywords":["cakephp", "cakephp2", "authenticate"],
     "license": "MIT",
     "require": {
