@@ -21,6 +21,8 @@ App::uses('ComponentCollection', 'Controller');
 App::uses('CookieAuthenticate', 'Authenticate.Controller/Component/Auth');
 App::uses('CookieComponent', 'Controller/Component');
 App::uses('SessionComponent', 'Controller/Component');
+App::uses('CakeSession', 'Model/Datasource');
+App::uses('AuthComponent', 'Controller/Component');
 App::uses('AppModel', 'Model');
 App::uses('CakeRequest', 'Network');
 App::uses('CakeResponse', 'Network');
@@ -150,5 +152,49 @@ class CookieAuthenticateTest extends CakeTestCase
         $this->Collection->Cookie->write('MultiUser', ['user' => 'mariano', 'password' => 'password']);
         $result = $this->auth->authenticate($this->request, $this->response);
         $this->assertEquals($expected, $result);
+        $this->assertEquals($expected, CakeSession::read(AuthComponent::$sessionKey));
+    }
+
+    /**
+     * test that the user is not written to the session when the cookie has no password
+     *
+     * @return void
+     */
+    public function testAuthenticateMissingPassword(): void
+    {
+        CakeSession::delete(AuthComponent::$sessionKey);
+        $this->Collection->Cookie->write('MultiUser', ['user' => 'mariano']);
+        $this->assertFalse($this->auth->authenticate($this->request, $this->response));
+        $this->assertNull(CakeSession::read(AuthComponent::$sessionKey));
+    }
+
+    /**
+     * test logout destroys the cookie
+     *
+     * @return void
+     */
+    public function testLogout(): void
+    {
+        $this->Collection->Cookie->write('MultiUser', ['user' => 'mariano', 'password' => 'password']);
+        $this->assertNotEmpty($this->Collection->Cookie->read('MultiUser'));
+
+        $this->auth->logout([]);
+        $this->assertNull($this->Collection->Cookie->read('MultiUser'));
+    }
+
+    /**
+     * test logout does nothing when CookieComponent is not loaded
+     *
+     * @return void
+     */
+    public function testLogoutWithoutCookieComponent(): void
+    {
+        $this->Collection->Cookie->write('MultiUser', ['user' => 'mariano', 'password' => 'password']);
+        $auth = new CookieAuthenticate(new ComponentCollection(), [
+            'fields' => ['username' => 'user', 'password' => 'password'],
+            'userModel' => 'MultiUser',
+        ]);
+        $auth->logout([]);
+        $this->assertNotEmpty($this->Collection->Cookie->read('MultiUser'));
     }
 }

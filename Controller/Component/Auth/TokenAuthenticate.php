@@ -140,6 +140,7 @@ class TokenAuthenticate extends BaseAuthenticate
      * @param string $username The token identifier.
      * @param string $password Unused password.
      * @return Mixed Either false on failure, or an array of user data.
+     * @throws CakeException When the user model is not a Model.
      */
     protected function _findUser($username, $password = null)
     {
@@ -153,7 +154,11 @@ class TokenAuthenticate extends BaseAuthenticate
         if (!empty($this->settings['scope'])) {
             $conditions = array_merge($conditions, $this->settings['scope']);
         }
-        $result = ClassRegistry::init($userModel)->find('first', [
+        $User = ClassRegistry::init($userModel);
+        if (!$User instanceof Model) {
+            throw new CakeException(sprintf('%s is not a Model', $userModel));
+        }
+        $result = $User->find('first', [
             'conditions' => $conditions,
             'recursive' => (int)$this->settings['recursive'],
             'contain' => $this->settings['contain'],

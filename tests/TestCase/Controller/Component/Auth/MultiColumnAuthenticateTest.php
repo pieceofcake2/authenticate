@@ -155,4 +155,23 @@ class MultiColumnAuthenticateTest extends CakeTestCase
 
         $this->assertFalse($this->auth->authenticate($request, $this->response));
     }
+
+    /**
+     * test that a userModel which is not a Model throws an exception
+     *
+     * @return void
+     */
+    public function testAuthenticateNonModelUserModel(): void
+    {
+        $this->auth->settings['userModel'] = 'stdClass';
+        $request = new CakeRequest('posts/index', false);
+        $request->data = ['stdClass' => [
+            'user' => 'mariano',
+            'password' => 'password',
+        ]];
+
+        $this->expectException(CakeException::class);
+        $this->expectExceptionMessage('stdClass is not a Model');
+        $this->auth->authenticate($request, $this->response);
+    }
 }
