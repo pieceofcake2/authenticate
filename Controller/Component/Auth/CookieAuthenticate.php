@@ -1,6 +1,7 @@
 <?php
 App::uses('BaseAuthenticate', 'Controller/Component/Auth');
 App::uses('AuthComponent', 'Controller/Component');
+App::uses('CakeSession', 'Model/Datasource');
 
 /**
  * An authentication adapter for AuthComponent
@@ -63,14 +64,15 @@ class CookieAuthenticate extends BaseAuthenticate
             return false;
         }
 
-        extract($this->settings['fields']);
+        $username = $this->settings['fields']['username'];
+        $password = $this->settings['fields']['password'];
         if (empty($data[$username]) || empty($data[$password])) {
             return false;
         }
 
         $user = $this->_findUser($data[$username], $data[$password]);
         if ($user) {
-            $this->_Collection->Session->write(AuthComponent::$sessionKey, $user);
+            CakeSession::write(AuthComponent::$sessionKey, $user);
 
             return $user;
         }
@@ -98,6 +100,8 @@ class CookieAuthenticate extends BaseAuthenticate
      */
     public function logout($user)
     {
-        $this->_Collection->Cookie->destroy();
+        if (isset($this->_Collection->Cookie) && $this->_Collection->Cookie instanceof CookieComponent) {
+            $this->_Collection->Cookie->destroy();
+        }
     }
 }

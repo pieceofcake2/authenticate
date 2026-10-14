@@ -54,6 +54,7 @@ class MultiColumnAuthenticate extends FormAuthenticate
      * @param string $username The username/identifier.
      * @param string $password The unhashed password.
      * @return Mixed Either false on failure, or an array of user data.
+     * @throws CakeException When the user model is not a Model.
      */
     protected function _findUser($username, $password = null)
     {
@@ -72,7 +73,11 @@ class MultiColumnAuthenticate extends FormAuthenticate
         if (!empty($this->settings['scope'])) {
             $conditions = array_merge($conditions, $this->settings['scope']);
         }
-        $result = ClassRegistry::init($userModel)->find('first', [
+        $User = ClassRegistry::init($userModel);
+        if (!$User instanceof Model) {
+            throw new CakeException(sprintf('%s is not a Model', $userModel));
+        }
+        $result = $User->find('first', [
             'conditions' => $conditions,
             'recursive' => 0,
             'contain' => $this->settings['contain'],

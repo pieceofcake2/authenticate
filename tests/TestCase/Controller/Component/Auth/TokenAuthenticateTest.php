@@ -112,4 +112,20 @@ class TokenAuthenticateTest extends CakeTestCase
         $result = $this->auth->getUser($request, $this->response);
         $this->assertEquals($expected, $result);
     }
+
+    /**
+     * test that a userModel which is not a Model throws an exception
+     *
+     * @return void
+     */
+    public function testAuthenticateNonModelUserModel(): void
+    {
+        $this->auth->settings['userModel'] = 'stdClass';
+        $this->auth->settings['_parameter'] = 'token';
+        $request = new CakeRequest('posts/index?_token=12345');
+
+        $this->expectException(CakeException::class);
+        $this->expectExceptionMessage('stdClass is not a Model');
+        $this->auth->getUser($request, $this->response);
+    }
 }
