@@ -21,8 +21,8 @@ for CakePHP 2.
 
 ## Documentation
 
-- Website: https://pieceofcake2.github.io/authenticate/
-- Markdown: [docs/README.md](docs/README.md) (for AI tools and offline reading)
+- Website: https://pieceofcake2.github.io/authenticate/ (日本語: https://pieceofcake2.github.io/authenticate/ja/)
+- Markdown: [docs/README.md](docs/README.md) (日本語: [docs/ja/README.md](docs/ja/README.md)) (for AI tools and offline reading)
 
 The Markdown documentation is also included in the Composer package, in the plugin's directory: `plugins/Authenticate/docs/README.md` (the location depends on your `installer-paths`). Install the package with `--dev` if you only need it for development.
 
