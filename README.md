@@ -19,6 +19,13 @@ Authentication objects for the `AuthComponent` of CakePHP 2 applications running
 This is a fork of [FriendsOfCake/Authenticate](https://github.com/FriendsOfCake/Authenticate)
 for CakePHP 2.
 
+## Documentation
+
+- Website: https://pieceofcake2.github.io/authenticate/
+- Markdown: [docs/README.md](docs/README.md) (for AI tools and offline reading)
+
+The Markdown documentation is also included in the Composer package, in the plugin's directory: `plugins/Authenticate/docs/README.md` (the location depends on your `installer-paths`). Install the package with `--dev` if you only need it for development.
+
 ## Requirements
 
 - PHP 8.0+
@@ -32,10 +39,6 @@ composer require pieceofcake2/authenticate
 
 Then load the plugin with `CakePlugin::load('Authenticate')` and add the authenticate objects
 to the `authenticate` setting of `AuthComponent`.
-
-## Documentation
-
-Documentation: https://pieceofcake2.github.io/authenticate/
 
 ## Contributing
 
