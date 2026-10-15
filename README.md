@@ -44,6 +44,15 @@ to the `authenticate` setting of `AuthComponent`.
 
 See the [contribution guidelines](https://github.com/pieceofcake2/.github/blob/master/CONTRIBUTING.md).
 
+## Origin
+
+This package is a maintained fork of
+[FriendsOfCake/Authenticate](https://github.com/FriendsOfCake/Authenticate)
+(`friendsofcake/authenticate` on Packagist, last upstream version 1.0.2), originally by M. Ypes
+(Ceeram). It is maintained for CakePHP 2 on modern PHP by
+[pieceofcake2](https://github.com/pieceofcake2). Changes from the original are listed in the
+[commit history since the fork](https://github.com/pieceofcake2/authenticate/compare/4d91c2b...1.x).
+
 ## License
 
 Licensed under the MIT License. See [LICENSE](LICENSE).
