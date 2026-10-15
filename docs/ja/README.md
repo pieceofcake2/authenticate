@@ -7,7 +7,7 @@ CakePHP 2 アプリケーションの `AuthComponent` のための認証オブ�
 | --- | --- | --- |
 | `MultiColumnAuthenticate` | `Authenticate.MultiColumn` | フォームのデータでログインします。ユーザー名のフィールドの値を、例えばユーザー名とメールアドレスのように複数のカラムと照合します。 |
 | `CookieAuthenticate` | `Authenticate.Cookie` | 暗号化されたクッキーに保存された認証情報でログインします (「ログイン状態を保持する」)。 |
-| `TokenAuthenticate` | `Authenticate.Token` | クエリーパラメーターまたはリクエストヘッダーで渡されたトークンで、リクエストごとに認証します。 |
+| `TokenAuthenticate` | `Authenticate.Token` | クエリパラメータまたはリクエストヘッダーで渡されたトークンで、リクエストごとに認証します。 |
 
 以前の `GoogleAuthenticate` クラスはこのプラグインには含まれていません。
 [ceeram/GoogleAuthenticate](https://github.com/ceeram/GoogleAuthenticate) に移動しました。
@@ -220,7 +220,7 @@ class UsersController extends AppController
 
 `TokenAuthenticate` は、例えば API へのステートレスなリクエストを、ユーザーモデルのカラムに保存された
 トークンで認証します。トークンは、`header` で指定したリクエストヘッダーか、`parameter` で指定した
-クエリーパラメーター (`/api/posts.json?_token=...`) から読み込みます。
+クエリパラメータ (`/api/posts.json?_token=...`) から読み込みます。
 
 ```php
 class AppController extends Controller
@@ -248,7 +248,7 @@ class AppController extends Controller
 
 | 設定 | 説明 |
 | --- | --- |
-| `parameter` | トークンのクエリーパラメーター (デフォルト: `_token`)。 |
+| `parameter` | トークンのクエリパラメータ (デフォルト: `_token`)。 |
 | `header` | トークンのリクエストヘッダー (デフォルト: `X-ApiToken`)。`parameter` と `header` の少なくとも一方が必要です。 |
 | `userModel` | ユーザーモデル (デフォルト: `User`)。 |
 | `fields` | `token` はトークンを保存するカラムです (デフォルト: `token`)。`password` カラムはユーザーのデータから取り除かれます。 |
