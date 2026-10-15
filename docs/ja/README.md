@@ -6,7 +6,7 @@ CakePHP 2 アプリケーションの `AuthComponent` のための認証オブ�
 | クラス | `authenticate` での名前 | 説明 |
 | --- | --- | --- |
 | `MultiColumnAuthenticate` | `Authenticate.MultiColumn` | フォームのデータでログインします。ユーザー名のフィールドの値を、たとえばユーザー名とメールアドレスのように複数のカラムと照合します。 |
-| `CookieAuthenticate` | `Authenticate.Cookie` | 暗号化されたクッキーに保存された認証情報でログインします (「ログイン状態を保持する」)。 |
+| `CookieAuthenticate` | `Authenticate.Cookie` | 暗号化された Cookie に保存された認証情報でログインします (「ログイン状態を保持する」)。 |
 | `TokenAuthenticate` | `Authenticate.Token` | クエリパラメータまたはリクエストヘッダーで渡されたトークンで、リクエストごとに認証します。 |
 
 以前の `GoogleAuthenticate` クラスはこのプラグインには含まれていません。
@@ -118,8 +118,8 @@ class AppController extends Controller
 
 ## CookieAuthenticate
 
-`CookieAuthenticate` は、`CookieComponent` が書き込んだ暗号化されたクッキーからユーザー名とパスワードを
-読み込み、一致すればユーザーをログインさせます。クッキーの名前はユーザーモデルの名前になります
+`CookieAuthenticate` は、`CookieComponent` が書き込んだ暗号化された Cookie からユーザー名とパスワードを
+読み込み、一致すればユーザーをログインさせます。Cookie の名前はユーザーモデルの名前になります
 (`User` や `SomePlugin.User` の場合は `User`)。
 
 ```php
@@ -146,26 +146,26 @@ class AppController extends Controller
 
 | 設定 | 説明 |
 | --- | --- |
-| `fields` | クッキー内のユーザー名とパスワードのキー (デフォルト: `username` と `password`)。 |
+| `fields` | Cookie 内のユーザー名とパスワードのキー (デフォルト: `username` と `password`)。 |
 | `userModel` | ユーザーモデル (デフォルト: `User`)。 |
 | `scope` | ユーザーを検索するときの追加の条件。 |
-| `crypt` | クッキーの暗号化のタイプ。`CookieComponent::type()` に渡されます (デフォルト: `rijndael`)。 |
+| `crypt` | Cookie の暗号化のタイプ。`CookieComponent::type()` に渡されます (デフォルト: `rijndael`)。 |
 
 `Cookie` コンポーネントを読み込んでおく必要があります。読み込んでいない場合は `CakeException` が
-スローされます。ログアウト時 (`AuthComponent::logout()`) には、`CookieComponent` のクッキーが削除されます。
+スローされます。ログアウト時 (`AuthComponent::logout()`) には、`CookieComponent` の Cookie が削除されます。
 
 > [!IMPORTANT]
 > `crypt` は `aes` に設定してください。デフォルトの `rijndael` は mcrypt エクステンションが必要ですが、
 > mcrypt は PHP 7.2 以降では使えません。`aes` は、`config/core.php` で `Security.useOpenSsl` が `true`
 > の場合に OpenSSL を使います ([pieceofcake2/app](https://github.com/pieceofcake2/app) スケルトンでは
-> 設定済みです)。クッキーを書き込むときも同じタイプを使ってください。
+> 設定済みです)。Cookie を書き込むときも同じタイプを使ってください。
 
 <a id="setting-the-cookie"></a>
 
-### クッキーの設定
+### Cookie の設定
 
-クッキーはアプリケーションで書き込みます。たとえば、ユーザーが「ログイン状態を保持する」のチェックボックスを
-付けてログインしたときに書き込みます。クッキーには平文のパスワードを暗号化して保存するので、必ず暗号化の
+Cookie はアプリケーションで書き込みます。たとえば、ユーザーが「ログイン状態を保持する」のチェックボックスを
+付けてログインしたときに書き込みます。Cookie には平文のパスワードを暗号化して保存するので、必ず暗号化の
 タイプを指定し、有効期間を制限してください。
 
 ```php
@@ -212,7 +212,7 @@ class UsersController extends AppController
 }
 ```
 
-クッキーのデータのキーは、`fields` 設定と一致している必要があります。
+Cookie のデータのキーは、`fields` 設定と一致している必要があります。
 
 <a id="tokenauthenticate"></a>
 
@@ -262,7 +262,7 @@ class AppController extends Controller
 
 ## 認証オブジェクトの組み合わせ
 
-認証オブジェクトは順番に試されます。次の設定では、まずクッキーを確認し、次にフォームのデータを
+認証オブジェクトは順番に試されます。次の設定では、まず Cookie を確認し、次にフォームのデータを
 確認します。
 
 ```php
