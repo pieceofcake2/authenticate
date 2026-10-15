@@ -1,11 +1,11 @@
 # Authenticate ドキュメント
 
 Authenticate プラグインは、[pieceofcake2/cakephp](https://github.com/pieceofcake2/cakephp) で動く
-CakePHP 2 アプリケーションの `AuthComponent` のための認証オブジェクトを提供します:
+CakePHP 2 アプリケーションの `AuthComponent` のための認証オブジェクトを提供します。
 
 | クラス | `authenticate` での名前 | 説明 |
 | --- | --- | --- |
-| `MultiColumnAuthenticate` | `Authenticate.MultiColumn` | フォームのデータでログインします。ユーザー名のフィールドの値を、例えばユーザー名とメールアドレスのように複数のカラムと照合します。 |
+| `MultiColumnAuthenticate` | `Authenticate.MultiColumn` | フォームのデータでログインします。ユーザー名のフィールドの値を、たとえばユーザー名とメールアドレスのように複数のカラムと照合します。 |
 | `CookieAuthenticate` | `Authenticate.Cookie` | 暗号化されたクッキーに保存された認証情報でログインします (「ログイン状態を保持する」)。 |
 | `TokenAuthenticate` | `Authenticate.Token` | クエリパラメータまたはリクエストヘッダーで渡されたトークンで、リクエストごとに認証します。 |
 
@@ -22,7 +22,7 @@ CakePHP 2 アプリケーションの `AuthComponent` のための認証オブ�
 
 ## インストール
 
-[Composer](https://getcomposer.org/) でプラグインをインストールします:
+[Composer](https://getcomposer.org/) でプラグインをインストールします。
 
 ```bash
 composer require pieceofcake2/authenticate
@@ -30,15 +30,15 @@ composer require pieceofcake2/authenticate
 
 このプラグインは `cakephp-plugin` タイプなので、`composer/installers` によってプラグインディレクトリに
 インストールされます。正しい場所にインストールされるように、アプリケーションの `composer.json` で
-`installer-paths` を設定してください:
+`installer-paths` を設定してください。
 
 | レイアウト | `installer-paths` |
 | --- | --- |
 | モダン (`config/`, `src/`, `templates/`, `plugins/`) | `"plugins/{$name}/": ["type:cakephp-plugin"]` |
 | レガシー (`app/Config/`, `app/Plugin/`) | `"app/Plugin/{$name}/": ["type:cakephp-plugin"]` |
 
-`config/bootstrap.php` (レガシーレイアウトでは `app/Config/bootstrap.php`) でプラグインをロードします。
-すでに `CakePlugin::loadAll()` を使っている場合は不要です:
+`config/bootstrap.php` (レガシーレイアウトでは `app/Config/bootstrap.php`) でプラグインを読み込みます。
+すでに `CakePlugin::loadAll()` を使っている場合は不要です。
 
 ```php
 CakePlugin::load('Authenticate');
@@ -53,7 +53,7 @@ CakePlugin::load('Authenticate');
 
 `MultiColumnAuthenticate` は `FormAuthenticate` と同じように動作しますが、ログインフォームのユーザー名の
 フィールドの値を `columns` のすべてのカラムから検索します。次の設定では、ユーザーは `login`
-フィールドにユーザー名とメールアドレスのどちらを入力してもログインできます:
+フィールドにユーザー名とメールアドレスのどちらを入力してもログインできます。
 
 ```php
 class AppController extends Controller
@@ -76,7 +76,7 @@ class AppController extends Controller
 }
 ```
 
-または `beforeFilter()` で設定します:
+または `beforeFilter()` で設定します。
 
 ```php
 class AppController extends Controller
@@ -151,7 +151,7 @@ class AppController extends Controller
 | `scope` | ユーザーを検索するときの追加の条件。 |
 | `crypt` | クッキーの暗号化のタイプ。`CookieComponent::type()` に渡されます (デフォルト: `rijndael`)。 |
 
-`Cookie` コンポーネントをロードしておく必要があります。ロードしていない場合は `CakeException` が
+`Cookie` コンポーネントを読み込んでおく必要があります。読み込んでいない場合は `CakeException` が
 スローされます。ログアウト時 (`AuthComponent::logout()`) には、`CookieComponent` のクッキーが削除されます。
 
 > [!IMPORTANT]
@@ -164,9 +164,9 @@ class AppController extends Controller
 
 ### クッキーの設定
 
-クッキーはアプリケーションで書き込みます。例えば、ユーザーが「ログイン状態を保持する」のチェックボックスを
+クッキーはアプリケーションで書き込みます。たとえば、ユーザーが「ログイン状態を保持する」のチェックボックスを
 付けてログインしたときに書き込みます。クッキーには平文のパスワードを暗号化して保存するので、必ず暗号化の
-タイプを指定し、有効期間を制限してください:
+タイプを指定し、有効期間を制限してください。
 
 ```php
 class UsersController extends AppController
@@ -218,7 +218,7 @@ class UsersController extends AppController
 
 ## TokenAuthenticate
 
-`TokenAuthenticate` は、例えば API へのステートレスなリクエストを、ユーザーモデルのカラムに保存された
+`TokenAuthenticate` は、たとえば API へのステートレスなリクエストを、ユーザーモデルのカラムに保存された
 トークンで認証します。トークンは、`header` で指定したリクエストヘッダーか、`parameter` で指定した
 クエリパラメータ (`/api/posts.json?_token=...`) から読み込みます。
 
@@ -263,7 +263,7 @@ class AppController extends Controller
 ## 認証オブジェクトの組み合わせ
 
 認証オブジェクトは順番に試されます。次の設定では、まずクッキーを確認し、次にフォームのデータを
-確認します:
+確認します。
 
 ```php
 class AppController extends Controller
@@ -300,10 +300,11 @@ class AppController extends Controller
 
 ## 由来
 
-このパッケージは、M. Ypes 氏 (Ceeram) が作成した
+このパッケージは
 [FriendsOfCake/Authenticate](https://github.com/FriendsOfCake/Authenticate)
-(Packagist では `friendsofcake/authenticate`、アップストリームの最終バージョンは 1.0.2) をフォークして
-メンテナンスしているものです。[pieceofcake2](https://github.com/pieceofcake2) が、モダンな PHP で動く
-CakePHP 2 向けにメンテナンスしています。オリジナルからの変更点は
+(Packagist では `friendsofcake/authenticate`、アップストリームの最終バージョンは 1.0.2)
+のメンテナンスされたフォークで、元は M. Ypes (Ceeram) によって作られました。
+[pieceofcake2](https://github.com/pieceofcake2) が、モダンな PHP 上の CakePHP 2 向けにメンテナンスしています。
+オリジナルからの変更点は
 [フォーク以降のコミット履歴](https://github.com/pieceofcake2/authenticate/compare/4d91c2b...1.x)
-を参照してください。
+にあります。
