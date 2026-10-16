@@ -10,7 +10,8 @@ CakePHP 2 アプリケーションの `AuthComponent` のための認証オブ�
 | `TokenAuthenticate` | `Authenticate.Token` | クエリパラメータまたはリクエストヘッダーで渡されたトークンで、リクエストごとに認証します。 |
 
 以前の `GoogleAuthenticate` クラスはこのプラグインには含まれていません。
-[ceeram/GoogleAuthenticate](https://github.com/ceeram/GoogleAuthenticate) に移動しました。
+[ceeram/GoogleAuthenticate](https://github.com/ceeram/GoogleAuthenticate) に移動し、現在は
+[pieceofcake2/totp](https://pieceofcake2.github.io/totp/) (TOTP による 2 要素認証) としてメンテナンスされています。
 
 - [インストール](#installation)
 - [MultiColumnAuthenticate](#multicolumnauthenticate)

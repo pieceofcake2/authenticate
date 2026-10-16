@@ -10,7 +10,8 @@ CakePHP 2 applications running on [pieceofcake2/cakephp](https://github.com/piec
 | `TokenAuthenticate` | `Authenticate.Token` | Authenticate each request with a token given as a query parameter or a request header. |
 
 The former `GoogleAuthenticate` class is not part of this plugin; it was moved to
-[ceeram/GoogleAuthenticate](https://github.com/ceeram/GoogleAuthenticate).
+[ceeram/GoogleAuthenticate](https://github.com/ceeram/GoogleAuthenticate), which is maintained as
+[pieceofcake2/totp](https://pieceofcake2.github.io/totp/) (two-factor authentication with TOTP).
 
 - [Installation](#installation)
 - [MultiColumnAuthenticate](#multicolumnauthenticate)
