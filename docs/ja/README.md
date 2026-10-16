@@ -9,9 +9,9 @@ CakePHP 2 アプリケーションの `AuthComponent` のための認証オブ�
 | `CookieAuthenticate` | `Authenticate.Cookie` | 暗号化された Cookie に保存された認証情報でログインします (「ログイン状態を保持する」)。 |
 | `TokenAuthenticate` | `Authenticate.Token` | クエリパラメータまたはリクエストヘッダーで渡されたトークンで、リクエストごとに認証します。 |
 
-以前の `GoogleAuthenticate` クラスはこのプラグインには含まれていません。
-[ceeram/GoogleAuthenticate](https://github.com/ceeram/GoogleAuthenticate) に移動し、現在は
-[pieceofcake2/totp](https://pieceofcake2.github.io/totp/) (TOTP による 2 要素認証) としてメンテナンスされています。
+以前の `GoogleAuthenticate` クラスはこのプラグインには含まれていません。ワンタイムパスワード (TOTP)
+による 2 要素認証は [pieceofcake2/totp](https://pieceofcake2.github.io/totp/ja/)
+(旧 `ceeram/google-authenticate`) で提供しています。
 
 - [インストール](#installation)
 - [MultiColumnAuthenticate](#multicolumnauthenticate)

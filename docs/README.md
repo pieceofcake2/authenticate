@@ -9,9 +9,9 @@ CakePHP 2 applications running on [pieceofcake2/cakephp](https://github.com/piec
 | `CookieAuthenticate` | `Authenticate.Cookie` | Log in with the credentials stored in an encrypted cookie ("remember me"). |
 | `TokenAuthenticate` | `Authenticate.Token` | Authenticate each request with a token given as a query parameter or a request header. |
 
-The former `GoogleAuthenticate` class is not part of this plugin; it was moved to
-[ceeram/GoogleAuthenticate](https://github.com/ceeram/GoogleAuthenticate), which is maintained as
-[pieceofcake2/totp](https://pieceofcake2.github.io/totp/) (two-factor authentication with TOTP).
+The former `GoogleAuthenticate` class is not part of this plugin. Two-factor authentication with
+one-time passwords (TOTP) is provided by [pieceofcake2/totp](https://pieceofcake2.github.io/totp/)
+(formerly `ceeram/google-authenticate`).
 
 - [Installation](#installation)
 - [MultiColumnAuthenticate](#multicolumnauthenticate)
